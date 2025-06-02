@@ -16,4 +16,9 @@ public enum Rol implements GrantedAuthority {
     public String getAuthority() {
         return authority;
     }
+
+    public class Codigo {
+        public static final String CARAVANERO = "CARAVANERO";
+        public static final String COMERCIANTE = "COMERCIANTE";
+    }
 }

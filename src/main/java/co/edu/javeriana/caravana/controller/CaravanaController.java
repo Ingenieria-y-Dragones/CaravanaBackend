@@ -6,12 +6,14 @@ import co.edu.javeriana.caravana.dto.InventarioCaravanaDTO;
 import co.edu.javeriana.caravana.dto.JugadorDTO;
 import co.edu.javeriana.caravana.model.Juego;
 import co.edu.javeriana.caravana.model.Jugador;
+import co.edu.javeriana.caravana.model.Rol;
 import co.edu.javeriana.caravana.repository.CaravanaRepository;
 import co.edu.javeriana.caravana.service.CaravanaService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -31,42 +33,49 @@ public class CaravanaController {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
 
+    @Secured({Rol.Codigo.CARAVANERO})
     @PostMapping
     public CaravanaDTO crearCaravana(@RequestBody CaravanaDTO caravanaDTO) {
         logger.info("Crear caravana");
         return caravanaService.crearCaravana(caravanaDTO);
     }
 
+    @Secured({Rol.Codigo.CARAVANERO})
     @GetMapping("{idCaravana}")
     public CaravanaDTO buscarCaravana(@PathVariable("idCaravana") Long id) {
         logger.info("Vista de caravana");
         return caravanaService.buscarCaravana(id).orElseThrow();
     }
 
+    @Secured({Rol.Codigo.CARAVANERO})
     @PutMapping
     public CaravanaDTO actualizarCaravana(@RequestBody CaravanaDTO caravanaDTO) {
         logger.info("Actualizar caravana");
         return caravanaService.actualizarCaravana(caravanaDTO);
     }
 
+    @Secured({Rol.Codigo.CARAVANERO})
     @DeleteMapping("{idCaravana}")
     public void eliminarCaravana(@PathVariable("idCaravana") Long id) {
         logger.info("Eliminar caravana");
         caravanaService.eliminarCaravana(id);
     }
 
+    @Secured({Rol.Codigo.CARAVANERO})
     @GetMapping("{idCaravana}/jugadores")
     public List<JugadorDTO> listarJugadores(@PathVariable("idCaravana") Long id) {
         logger.info("Lista de jugadores");
         return caravanaService.listarJugadores(id).orElseThrow();
     }
 
+    @Secured({Rol.Codigo.CARAVANERO})
     @GetMapping("{idCaravana}/ciudad")
     public CiudadDTO recuperarCiudadCaravana(@PathVariable("idCaravana") Long id) {
         logger.info("Vista de ciudad de caravana");
         return caravanaService.recuperarCiudadCaravana(id).orElseThrow();
     }
 
+    @Secured({Rol.Codigo.CARAVANERO})
     @GetMapping("{idCaravana}/estado-ciudad")
     public ResponseEntity<Map<String, Object>> obtenerEstadoCiudad(@PathVariable("idCaravana") Long idCaravana) {
         logger.info("Obteniendo estado de ciudad para caravana " + idCaravana);
@@ -95,6 +104,7 @@ public class CaravanaController {
         }).orElse(ResponseEntity.notFound().build());
     }
 
+    @Secured({Rol.Codigo.CARAVANERO})
     @GetMapping("{idCaravana}/inventario")
     public List<InventarioCaravanaDTO> obtenerInventarioCaravana(@PathVariable("idCaravana") Long idCaravana) {
         logger.info("Obteniendo inventario de caravana {}", idCaravana);
