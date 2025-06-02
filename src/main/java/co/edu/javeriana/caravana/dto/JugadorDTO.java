@@ -1,5 +1,6 @@
 package co.edu.javeriana.caravana.dto;
 
+import co.edu.javeriana.caravana.model.Rol;
 import co.edu.javeriana.caravana.model.TipoJugador;
 
 public class JugadorDTO {
