@@ -92,28 +92,5 @@ public class TransaccionSystemTest {
             botonesComprar.get(0).click();
             page.waitForTimeout(300);
         }
-
-        // 6. (Opcional) Verifica el saldo actualizado o historial
-        // page.locator("#linkResumen").click();
-        // Locator liCaravanaSaldo = page.locator("#liCaravanaSaldo");
-        // liCaravanaSaldo.waitFor();
-        // String saldoEsperado = "Saldo: " + (SALDO_INICIAL - compras * 100) + ".00";
-        // String saldoReal = liCaravanaSaldo.textContent().trim();
-        // assertEquals(saldoEsperado, saldoReal);
-
-        // page.locator("#linkHistorial").click();
-        // Locator filasTransacciones = page.locator("//table[@id='tablaTransacciones']/tbody/tr/td[3]");
-        // for (int i = 0; i < 50; i++) {
-        //     if (filasTransacciones.count() == compras) break;
-        //     page.waitForTimeout(100);
-        // }
-        // List<String> cantidadesReales = filasTransacciones.all().stream()
-        //         .map(Locator::textContent)
-        //         .map(String::trim)
-        //         .collect(Collectors.toList());
-        // List<String> cantidadesEsperadas = IntStream.range(0, compras)
-        //         .mapToObj(i -> "1")
-        //         .collect(Collectors.toList());
-        // assertEquals(cantidadesEsperadas, cantidadesReales);
     }
 }
