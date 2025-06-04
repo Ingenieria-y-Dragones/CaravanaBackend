@@ -29,7 +29,7 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 
-@SpringBootTest(webEnvironment = WebEnvironment.DEFINED_PORT)
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD)
 @ActiveProfiles("system-testing")
 public class TransaccionSystemTest {
@@ -49,7 +49,6 @@ public class TransaccionSystemTest {
 
     @BeforeEach
     void init() {
-        // Crea la caravana y el producto para la prueba
         caravanaRepository.save(new Caravana(
                 "Caravana Test", 10f, 100f, SALDO_INICIAL, 100, true, 0f
         ));
@@ -68,45 +67,41 @@ public class TransaccionSystemTest {
 
     @Test
     void flujoTransaccionCompleta() {
-        // 1. Navega a la página de login
+        // 1. Login
         page.navigate(SERVER_URL + "/login");
-
-        // 2. Llena el formulario de login (ajusta los datos según un usuario válido en tu BD)
         page.waitForSelector("#txtEmail");
         page.locator("#txtEmail").fill("ahmed@gmail.com");
         page.locator("#txtPassword").fill("ahmed123");
         page.locator("button[type='submit']").click();
 
-        // 3. Espera a que la app redireccione y cargue la pantalla principal (ajusta el selector)
+        // 2. Espera a que cargue la página de caravana/vista/1
+        page.waitForSelector(".dashboard-container");
+        page.navigate(SERVER_URL + "/caravana/vista/1");
+        page.waitForSelector(".dashboard-container");
+
+        // 3. Haz clic en el botón "Comerciar" para ir a ciudad/vista/1
+        page.locator("button.header-button:has-text('Comerciar')").click();
+
+        // 4. Espera a que cargue la página de ciudad/vista/1
         page.waitForSelector(".panels-container");
 
-        // 4. Navega a la página de ciudad/vista/1
-        page.navigate(SERVER_URL + "/ciudad/vista/1");
-
-        // 5. Espera a que aparezcan los productos para comprar
-        page.waitForSelector(".btn-comprar");
-
-        // 6. Encuentra todos los botones de compra en la página (uno por producto)
+        // 5. Compra productos
         List<Locator> botonesComprar = page.locator(".btn-comprar").all();
-
-        // 7. Simula comprar el primer producto tres veces
         int compras = 3;
         for (int i = 0; i < compras; i++) {
             botonesComprar.get(0).click();
-            page.waitForTimeout(300); // espera breve para simular usuario y evitar race conditions
+            page.waitForTimeout(300);
         }
 
-        // 8. Verifica el saldo actualizado (ajusta el cálculo según tu lógica de negocio)
-        // Si tienes un resumen con el saldo, ajusta el selector y el cálculo
-        // page.locator("#linkResumen").click(); // si tienes un botón para ver el resumen
+        // 6. (Opcional) Verifica el saldo actualizado o historial
+        // page.locator("#linkResumen").click();
         // Locator liCaravanaSaldo = page.locator("#liCaravanaSaldo");
         // liCaravanaSaldo.waitFor();
         // String saldoEsperado = "Saldo: " + (SALDO_INICIAL - compras * 100) + ".00";
         // String saldoReal = liCaravanaSaldo.textContent().trim();
         // assertEquals(saldoEsperado, saldoReal);
 
-        // 9. Verifica que las transacciones aparecen en el historial
-        // page.locator("#linkHistorial").click(); // si tienes un botón para ver el historial
+        // page.locator("#linkHistorial").click();
         // Locator filasTransacciones = page.locator("//table[@id='tablaTransacciones']/tbody/tr/td[3]");
         // for (int i = 0; i < 50; i++) {
         //     if (filasTransacciones.count() == compras) break;
@@ -120,7 +115,5 @@ public class TransaccionSystemTest {
         //         .mapToObj(i -> "1")
         //         .collect(Collectors.toList());
         // assertEquals(cantidadesEsperadas, cantidadesReales);
-
-        // NOTA: Descomenta y ajusta la verificación de saldo e historial según los selectores reales de tu app.
     }
 }
