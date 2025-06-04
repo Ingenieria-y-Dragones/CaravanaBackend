@@ -1,9 +1,15 @@
 package co.edu.javeriana.caravana.model;
 
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+import java.util.List;
 
 @Entity
-public class Jugador {
+public class Jugador implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -11,6 +17,10 @@ public class Jugador {
 
     private String nombre;
     private TipoJugador tipo;
+    private String email;
+    private String contrasenia;
+    @Enumerated(EnumType.STRING)
+    private Rol rol;
 
     @ManyToOne
     @JoinColumn(name = "juegoid")
@@ -22,9 +32,12 @@ public class Jugador {
     public Jugador() {
     }
 
-    public Jugador(String nombre, TipoJugador tipo) {
+    public Jugador(String nombre, TipoJugador tipo, String email, String contrasenia, Rol rol) {
         this.nombre = nombre;
         this.tipo = tipo;
+        this.email = email;
+        this.contrasenia = contrasenia;
+        this.rol = rol;
     }
 
     public Long getId() {
@@ -51,12 +64,28 @@ public class Jugador {
         this.tipo = tipo;
     }
 
-    public Caravana getCaravana() {
-        return caravana;
+    public String getEmail() {
+        return email;
     }
 
-    public void setCaravana(Caravana caravana) {
-        this.caravana = caravana;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getContrasenia() {
+        return contrasenia;
+    }
+
+    public void setContrasenia(String contrasenia) {
+        this.contrasenia = contrasenia;
+    }
+
+    public Rol getRol() {
+        return rol;
+    }
+
+    public void setRol(Rol rol) {
+        this.rol = rol;
     }
 
     public Juego getJuego() {
@@ -65,5 +94,49 @@ public class Jugador {
 
     public void setJuego(Juego juego) {
         this.juego = juego;
+    }
+
+    public Caravana getCaravana() {
+        return caravana;
+    }
+
+    public void setCaravana(Caravana caravana) {
+        this.caravana = caravana;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(rol.name()));
+    }
+
+    @Override
+    public String getPassword() {
+        return contrasenia;
+    }
+
+    @Override
+    public String getUsername() {
+        // email in our case
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }

@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -48,6 +49,9 @@ public class DBInitializer implements CommandLineRunner {
 
     @Autowired
     private ServicioRepository servicioRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     private Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -327,21 +331,21 @@ public class DBInitializer implements CommandLineRunner {
 
             if (!caravanas.isEmpty()) {
                 // Jugadores para la primera caravana
-                Jugador jugador1 = new Jugador("Ahmed", TipoJugador.CARAVANERO);
+                Jugador jugador1 = new Jugador("Ahmed", TipoJugador.CARAVANERO, "ahmed@gmail.com", passwordEncoder.encode("ahmed123"), Rol.CARAVANERO);
                 jugador1.setCaravana(caravanas.get(0));
                 jugadores.add(jugador1);
 
-                Jugador jugador2 = new Jugador("Isabella", TipoJugador.COMERCIANTE);
+                Jugador jugador2 = new Jugador("Isabella", TipoJugador.COMERCIANTE, "isabella@gmail.com", passwordEncoder.encode("isabella123"), Rol.COMERCIANTE);
                 jugador2.setCaravana(caravanas.get(0));
                 jugadores.add(jugador2);
 
                 // Jugadores para la segunda caravana si existe
                 if (caravanas.size() > 1) {
-                    Jugador jugador3 = new Jugador("Carlos", TipoJugador.CARAVANERO);
+                    Jugador jugador3 = new Jugador("Carlos", TipoJugador.CARAVANERO, "carlos@gmail.com", passwordEncoder.encode("carlos123"), Rol.CARAVANERO);
                     jugador3.setCaravana(caravanas.get(1));
                     jugadores.add(jugador3);
 
-                    Jugador jugador4 = new Jugador("Fatima", TipoJugador.COMERCIANTE);
+                    Jugador jugador4 = new Jugador("Fatima", TipoJugador.COMERCIANTE, "fatima@gmail.com", passwordEncoder.encode("fatima123"), Rol.COMERCIANTE);
                     jugador4.setCaravana(caravanas.get(1));
                     jugadores.add(jugador4);
                 }

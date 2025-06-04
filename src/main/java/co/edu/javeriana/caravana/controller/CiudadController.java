@@ -4,10 +4,12 @@ import co.edu.javeriana.caravana.dto.CiudadDTO;
 import co.edu.javeriana.caravana.dto.InventarioCaravanaDTO;
 import co.edu.javeriana.caravana.dto.InventarioCiudadDTO;
 import co.edu.javeriana.caravana.dto.ServicioOfrecidoDTO;
+import co.edu.javeriana.caravana.model.Rol;
 import co.edu.javeriana.caravana.service.CaravanaService;
 import co.edu.javeriana.caravana.service.CiudadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,6 +31,7 @@ public class CiudadController {
         this.caravanaService = caravanaService;
     }
 
+    @Secured({Rol.Codigo.CARAVANERO, Rol.Codigo.COMERCIANTE})
     @GetMapping("/{id}")
     public ResponseEntity<CiudadDTO> obtenerCiudad(@PathVariable Long id) {
         return ciudadService.obtenerCiudad(id)
@@ -36,16 +39,19 @@ public class CiudadController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @Secured({Rol.Codigo.CARAVANERO, Rol.Codigo.COMERCIANTE})
     @GetMapping("/{id}/productos")
     public List<InventarioCiudadDTO> obtenerProductosCiudad(@PathVariable Long id) {
         return ciudadService.obtenerProductosCiudad(id);
     }
 
+    @Secured({Rol.Codigo.CARAVANERO, Rol.Codigo.COMERCIANTE})
     @GetMapping("/{id}/servicios")
     public List<ServicioOfrecidoDTO> obtenerServiciosCiudad(@PathVariable Long id) {
         return ciudadService.obtenerServiciosCiudad(id);
     }
 
+    @Secured({Rol.Codigo.CARAVANERO, Rol.Codigo.COMERCIANTE})
     @GetMapping("/{id}/inventario")
     public List<InventarioCaravanaDTO> obtenerInventarioCaravana(@PathVariable Long id) {
         return caravanaService.obtenerInventarioCaravana(id); // Llamada al método de instancia

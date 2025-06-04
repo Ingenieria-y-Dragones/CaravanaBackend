@@ -1,5 +1,6 @@
 package co.edu.javeriana.caravana.dto;
 
+import co.edu.javeriana.caravana.model.Rol;
 import co.edu.javeriana.caravana.model.TipoJugador;
 
 public class JugadorDTO {
@@ -7,14 +8,16 @@ public class JugadorDTO {
     private Long id;
     private String nombre;
     private TipoJugador tipo;
+    private String email;
 
     public JugadorDTO() {
     }
 
-    public JugadorDTO(Long id, String nombre, TipoJugador tipo) {
+    public JugadorDTO(Long id, String nombre, TipoJugador tipo, String email) {
         this.id = id;
         this.nombre = nombre;
         this.tipo = tipo;
+        this.email = email;
     }
 
     public Long getId() {
@@ -40,4 +43,8 @@ public class JugadorDTO {
     public void setTipo(TipoJugador tipo) {
         this.tipo = tipo;
     }
+
+    public String getEmail() { return email; }
+
+    public void setEmail(String email) { this.email = email; }
 }
