@@ -10,6 +10,7 @@ public class JugadorMapper {
         jugadorDTO.setId(jugador.getId());
         jugadorDTO.setNombre(jugador.getNombre());
         jugadorDTO.setTipo(jugador.getTipo());
+        jugadorDTO.setEmail(jugador.getEmail());
         return jugadorDTO;
     }
 
@@ -18,6 +19,7 @@ public class JugadorMapper {
         jugador.setId(jugadorDTO.getId());
         jugador.setNombre(jugadorDTO.getNombre());
         jugador.setTipo(jugadorDTO.getTipo());
+        jugador.setEmail(jugadorDTO.getEmail());
         return jugador;
     }
 }

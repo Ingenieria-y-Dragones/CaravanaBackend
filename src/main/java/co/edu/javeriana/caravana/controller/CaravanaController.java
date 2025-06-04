@@ -33,49 +33,49 @@ public class CaravanaController {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
 
-    @Secured({Rol.Codigo.CARAVANERO})
+    @Secured({Rol.Codigo.CARAVANERO, Rol.Codigo.COMERCIANTE})
     @PostMapping
     public CaravanaDTO crearCaravana(@RequestBody CaravanaDTO caravanaDTO) {
         logger.info("Crear caravana");
         return caravanaService.crearCaravana(caravanaDTO);
     }
 
-    @Secured({Rol.Codigo.CARAVANERO})
+    @Secured({Rol.Codigo.CARAVANERO, Rol.Codigo.COMERCIANTE})
     @GetMapping("{idCaravana}")
     public CaravanaDTO buscarCaravana(@PathVariable("idCaravana") Long id) {
         logger.info("Vista de caravana");
         return caravanaService.buscarCaravana(id).orElseThrow();
     }
 
-    @Secured({Rol.Codigo.CARAVANERO})
+    @Secured({Rol.Codigo.CARAVANERO, Rol.Codigo.COMERCIANTE})
     @PutMapping
     public CaravanaDTO actualizarCaravana(@RequestBody CaravanaDTO caravanaDTO) {
         logger.info("Actualizar caravana");
         return caravanaService.actualizarCaravana(caravanaDTO);
     }
 
-    @Secured({Rol.Codigo.CARAVANERO})
+    @Secured({Rol.Codigo.CARAVANERO, Rol.Codigo.COMERCIANTE})
     @DeleteMapping("{idCaravana}")
     public void eliminarCaravana(@PathVariable("idCaravana") Long id) {
         logger.info("Eliminar caravana");
         caravanaService.eliminarCaravana(id);
     }
 
-    @Secured({Rol.Codigo.CARAVANERO})
+    @Secured({Rol.Codigo.CARAVANERO, Rol.Codigo.COMERCIANTE})
     @GetMapping("{idCaravana}/jugadores")
     public List<JugadorDTO> listarJugadores(@PathVariable("idCaravana") Long id) {
         logger.info("Lista de jugadores");
         return caravanaService.listarJugadores(id).orElseThrow();
     }
 
-    @Secured({Rol.Codigo.CARAVANERO})
+    @Secured({Rol.Codigo.CARAVANERO, Rol.Codigo.COMERCIANTE})
     @GetMapping("{idCaravana}/ciudad")
     public CiudadDTO recuperarCiudadCaravana(@PathVariable("idCaravana") Long id) {
         logger.info("Vista de ciudad de caravana");
         return caravanaService.recuperarCiudadCaravana(id).orElseThrow();
     }
 
-    @Secured({Rol.Codigo.CARAVANERO})
+    @Secured({Rol.Codigo.CARAVANERO, Rol.Codigo.COMERCIANTE})
     @GetMapping("{idCaravana}/estado-ciudad")
     public ResponseEntity<Map<String, Object>> obtenerEstadoCiudad(@PathVariable("idCaravana") Long idCaravana) {
         logger.info("Obteniendo estado de ciudad para caravana " + idCaravana);
@@ -104,7 +104,7 @@ public class CaravanaController {
         }).orElse(ResponseEntity.notFound().build());
     }
 
-    @Secured({Rol.Codigo.CARAVANERO})
+    @Secured({Rol.Codigo.CARAVANERO, Rol.Codigo.COMERCIANTE})
     @GetMapping("{idCaravana}/inventario")
     public List<InventarioCaravanaDTO> obtenerInventarioCaravana(@PathVariable("idCaravana") Long idCaravana) {
         logger.info("Obteniendo inventario de caravana {}", idCaravana);

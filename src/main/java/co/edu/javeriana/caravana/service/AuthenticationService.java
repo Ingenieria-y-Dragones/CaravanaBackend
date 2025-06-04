@@ -29,12 +29,23 @@ public class AuthenticationService {
     private AuthenticationManager authenticationManager;
 
     public JwtAuthenticationResponse signup(UserRegistrationDTO request) {
-        Jugador user = new Jugador(
-                request.getNombre(),
-                TipoJugador.CARAVANERO,
-                request.getCorreo(),
-                passwordEncoder.encode(request.getContrasenia()),
-                Rol.CARAVANERO);
+        String rol = new String();
+        Jugador user = new Jugador();
+        if(request.getTipo() == TipoJugador.CARAVANERO){
+             user = new Jugador(
+                    request.getNombre(),
+                    request.getTipo(),
+                    request.getCorreo(),
+                    passwordEncoder.encode(request.getContrasenia()),
+                    Rol.CARAVANERO);
+        }else if(request.getTipo() == TipoJugador.COMERCIANTE){
+            user = new Jugador(
+                    request.getNombre(),
+                    request.getTipo(),
+                    request.getCorreo(),
+                    passwordEncoder.encode(request.getContrasenia()),
+                    Rol.COMERCIANTE);
+        }
 
         userRepository.save(user);
         String jwt = jwtService.generateToken(user.getUsername());

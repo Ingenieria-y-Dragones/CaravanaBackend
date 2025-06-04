@@ -1,17 +1,21 @@
 package co.edu.javeriana.caravana.dto;
 
+import co.edu.javeriana.caravana.model.TipoJugador;
+
 public class UserRegistrationDTO {
     private String nombre;
     private String correo;
     private String contrasenia;
+    private TipoJugador tipo;
 
     public UserRegistrationDTO() {
     }
 
-    public UserRegistrationDTO(String nombre, String correo, String contrasenia) {
+    public UserRegistrationDTO(String nombre, String correo, String contrasenia, TipoJugador tipo) {
         this.nombre = nombre;
         this.correo = correo;
         this.contrasenia = contrasenia;
+        this.tipo = tipo;
     }
 
     public String getNombre() {
@@ -36,5 +40,13 @@ public class UserRegistrationDTO {
 
     public void setContrasenia(String contrasenia) {
         this.contrasenia = contrasenia;
+    }
+
+    public TipoJugador getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(TipoJugador tipo) {
+        this.tipo = tipo;
     }
 }
