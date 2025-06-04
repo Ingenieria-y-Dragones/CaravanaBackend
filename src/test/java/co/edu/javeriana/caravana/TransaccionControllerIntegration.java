@@ -22,11 +22,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * Pruebas de integración para los endpoints de transacciones.
  */
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
 @Transactional
 @ActiveProfiles("test") // Usa la configuración de seguridad de pruebas
-@WithMockUser(username = "admin", roles = {"USER", "ADMIN"}) // Simula usuario autenticado
+@WithMockUser(username = "admin", roles = {"CARAVANERO", "COMERCIANTE"}) // Simula usuario autenticado
 public class TransaccionControllerIntegration {
 
     @Autowired
