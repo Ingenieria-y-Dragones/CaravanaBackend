@@ -30,7 +30,7 @@ public class TransaccionController {
                 .orElse(ResponseEntity.badRequest().build());
     }
 
-    @Secured({Rol.Codigo.CARAVANERO, Rol.Codigo.COMERCIANTE})
+    @Secured({Rol.Codigo.CARAVANERO})
     @PostMapping("/compra/servicio")
     public ResponseEntity<TransaccionResultadoDTO> comprarServicio(@RequestBody TransaccionCompraDTO transaccion) {
         return transaccionService.procesarCompraServicio(transaccion)

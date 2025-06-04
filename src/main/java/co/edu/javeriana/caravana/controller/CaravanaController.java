@@ -47,7 +47,7 @@ public class CaravanaController {
         return caravanaService.buscarCaravana(id).orElseThrow();
     }
 
-    @Secured({Rol.Codigo.CARAVANERO, Rol.Codigo.COMERCIANTE})
+    @Secured({Rol.Codigo.CARAVANERO})
     @PutMapping
     public CaravanaDTO actualizarCaravana(@RequestBody CaravanaDTO caravanaDTO) {
         logger.info("Actualizar caravana");

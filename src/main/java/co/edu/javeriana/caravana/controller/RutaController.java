@@ -36,7 +36,7 @@ public class RutaController {
         return rutaService.buscarRuta(id).orElseThrow();
     }
 
-    @Secured({Rol.Codigo.CARAVANERO, Rol.Codigo.COMERCIANTE})
+    @Secured({Rol.Codigo.CARAVANERO})
     @PutMapping
     public RutaDTO actualizarRuta(@RequestBody RutaDTO rutaDTO) {
         logger.info("Actualizar ruta");
